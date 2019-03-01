@@ -41,19 +41,20 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
       res.json({ status: 'danger', message: `${err}` });
+    } else {
+      req.login(user, { session: false }, (err) => {
+        if (err) {
+          res.json({ status: 'danger', message: `${err}` });
+        } else {
+          const token = getToken(user);
+          res.json({
+            status: 'success',
+            message: 'Successfully logged in',
+            token,
+          });
+        }
+      });
     }
-    req.login(user, { session: false }, (err) => {
-      if (err) {
-        res.json({ status: 'danger', message: `${err}` });
-      } else {
-        const token = getToken(user);
-        res.json({
-          status: 'success',
-          message: 'Successfully logged in',
-          token,
-        });
-      }
-    });
   })(req, res);
 });
 module.exports.router = router;
