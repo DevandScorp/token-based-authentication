@@ -36,8 +36,8 @@ app.get('/githubAuth/access_token', (req, res) => {
   request
     .post('https://github.com/login/oauth/access_token')
     .send({
-      client_id: 'ed4f0f433db3e37aa087',
-      client_secret: '377489269ee1f83d71e263473d157a16879ff6d8',
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRET,
       code,
     })
     .set('Accept', 'application/json')
