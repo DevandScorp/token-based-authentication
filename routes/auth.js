@@ -45,14 +45,14 @@ router.post('/login', (req, res, next) => {
     req.login(user, { session: false }, (err) => {
       if (err) {
         res.json({ status: 'danger', message: `${err}` });
+      } else {
+        const token = getToken(user);
+        res.json({
+          status: 'success',
+          message: 'Successfully logged in',
+          token,
+        });
       }
-
-      const token = getToken(user);
-      res.json({
-        status: 'success',
-        message: 'Successfully logged in',
-        token,
-      });
     });
   })(req, res);
 });
