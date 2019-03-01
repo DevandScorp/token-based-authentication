@@ -32,7 +32,9 @@ router.post('/register', (req, res) => {
 });
 function getToken(user) {
   console.log(user);
-  return jwt.sign(user.toJSON(), process.env.SECRET_OR_KEY, { expiresIn: 3600 });
+  if (user) {
+    return jwt.sign(user.toJSON(), process.env.SECRET_OR_KEY, { expiresIn: 3600 });
+  }
 }
 module.exports.getToken = getToken;
 router.post('/login', (req, res, next) => {
